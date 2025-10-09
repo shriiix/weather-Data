@@ -1,37 +1,29 @@
 import React from "react";
-import { TrendingUp } from "lucide-react";
+import { TrendingUp, TrendingDown } from "lucide-react";
 
-const StatCard = ({ icon: Icon, title, value, unit, change, color }) => (
-  <div className="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-100">
-    <div className="flex items-start justify-between">
-      <div>
-        <p className="text-gray-500 text-sm font-medium mb-1">{title}</p>
-        <div className="flex items-baseline gap-2">
-          <h3 className="text-3xl font-bold text-gray-800">{value}</h3>
-          <span className="text-gray-500 text-lg">{unit}</span>
+const StatCard = ({ icon: Icon, title, value, unit, change, color }) => {
+  const isPositive = change >= 0;
+
+  return (
+    <div className={`${color} rounded-xl p-6 shadow-lg text-white`}>
+      <div className="flex items-center justify-between mb-4">
+        <Icon size={32} className="opacity-80" />
+        <div
+          className={`flex items-center gap-1 ${
+            isPositive ? "bg-white/20" : "bg-black/20"
+          } px-2 py-1 rounded-full`}
+        >
+          {isPositive ? <TrendingUp size={16} /> : <TrendingDown size={16} />}
+          <span className="text-sm font-semibold">{Math.abs(change)}%</span>
         </div>
-        {change !== undefined && (
-          <div className="flex items-center gap-1 mt-2">
-            <TrendingUp
-              size={14}
-              className={change > 0 ? "text-green-500" : "text-red-500"}
-            />
-            <span
-              className={`text-sm font-medium ${
-                change > 0 ? "text-green-500" : "text-red-500"
-              }`}
-            >
-              {change > 0 ? "+" : ""}
-              {change}% vs yesterday
-            </span>
-          </div>
-        )}
       </div>
-      <div className={`p-3 rounded-lg ${color}`}>
-        <Icon size={24} className="text-white" />
-      </div>
+      <p className="text-sm opacity-90 mb-1">{title}</p>
+      <p className="text-3xl font-bold">
+        {value}
+        <span className="text-xl ml-1">{unit}</span>
+      </p>
     </div>
-  </div>
-);
+  );
+};
 
 export default StatCard;
