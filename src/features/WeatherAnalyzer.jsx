@@ -183,7 +183,7 @@ export default function WeatherAnalyzer() {
           value={stats.avgTemp}
           unit="°C"
           change={parseFloat(stats.tempChange)}
-          color="bg-gradient-to-br from-orange-400 to-red-500"
+          color="bg-orange-500"
         />
         <StatCard
           icon={Droplets}
@@ -191,7 +191,7 @@ export default function WeatherAnalyzer() {
           value={stats.avgHumidity}
           unit="%"
           change={parseFloat(stats.humidityChange)}
-          color="bg-gradient-to-br from-blue-400 to-cyan-500"
+          color="bg-blue-500"
         />
         <StatCard
           icon={Wind}
@@ -199,7 +199,7 @@ export default function WeatherAnalyzer() {
           value={stats.avgWind}
           unit="km/h"
           change={parseFloat(stats.windChange)}
-          color="bg-gradient-to-br from-teal-400 to-green-500"
+          color="bg-green-500"
         />
         <StatCard
           icon={CloudRain}
@@ -207,12 +207,12 @@ export default function WeatherAnalyzer() {
           value={stats.totalRainfall}
           unit="mm"
           change={parseFloat(stats.rainfallChange)}
-          color="bg-gradient-to-br from-indigo-400 to-purple-500"
+          color="bg-purple-500"
         />
       </div>
 
       {/* Summary */}
-      <div className="bg-gradient-to-r from-blue-500 to-indigo-600 rounded-xl p-6 shadow-lg text-white">
+      <div className="bg-blue-500 to-indigo-600 rounded-xl p-6 shadow-lg text-white">
         <div className="flex items-center gap-3 mb-4">
           <Sun size={32} />
           <h3 className="text-2xl font-bold">
