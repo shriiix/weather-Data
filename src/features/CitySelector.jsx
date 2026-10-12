@@ -85,7 +85,7 @@ const CitySelector = ({ selectedCity, setSelectedCity }) => {
     };
   }, []);
 
-  // Select a city
+
   const handleCitySelect = (city) => {
     setSelectedCity(city);
     setSearchTerm("");
@@ -95,7 +95,6 @@ const CitySelector = ({ selectedCity, setSelectedCity }) => {
     setIsOpen(false);
   };
 
-  // Show the next 5 cities
   const handleSeeMore = () => {
     setVisibleCount((prev) => prev + 5);
   };

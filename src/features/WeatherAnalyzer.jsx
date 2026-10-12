@@ -17,6 +17,27 @@ import DateRangeSelector from "./DateRangeSelector";
 import ViewModeSelector from "./ViewModeSelector";
 import { fetchWeeklyForecast } from "../services/weatherApi";
 
+function formatForecastDate(date, index) {
+  if (index === 0) {
+    return "Today";
+  }
+
+  if (index === 1) {
+    return "Tomorrow";
+  }
+
+  return new Date(`${date}T12:00:00Z`).toLocaleDateString("en-US", {
+    weekday: "long",
+    month: "short",
+    day: "numeric",
+    timeZone: "UTC",
+  });
+}
+
+function displayValue(value) {
+  return value ?? "--";
+}
+
 export default function WeatherAnalyzer() {
   const [selectedCity, setSelectedCity] = useState("Mumbai");
   const selectedCityName =
@@ -210,6 +231,93 @@ export default function WeatherAnalyzer() {
           color="bg-purple-500"
         />
       </div>
+
+      {/* Daily Forecast */}
+      <section className="bg-white rounded-xl p-6 shadow-lg mb-8 border border-gray-100">
+        <div className="mb-5">
+          <h2 className="text-2xl font-bold text-gray-800">
+            {dateRange === "5days"
+              ? "5-Day Weather Forecast"
+              : "7-Day Temperature Forecast"}
+          </h2>
+          <p className="text-gray-600 mt-1">
+            {dateRange === "5days"
+              ? "Daily temperatures, humidity, wind, and precipitation."
+              : "Daily average temperature from today onward."}
+          </p>
+        </div>
+
+        <div className="overflow-x-auto">
+          <table className="w-full min-w-max text-left">
+            <thead>
+              <tr className="border-b border-gray-200 text-sm text-gray-500">
+                <th scope="col" className="px-4 py-3 font-semibold">
+                  Date
+                </th>
+                <th scope="col" className="px-4 py-3 font-semibold">
+                  {dateRange === "5days" ? "Average temperature" : "Temperature"}
+                </th>
+                {dateRange === "5days" && (
+                  <>
+                    {/* <th scope="col" className="px-4 py-3 font-semibold">
+                      Low
+                    </th>
+                    <th scope="col" className="px-4 py-3 font-semibold">
+                      High
+                    </th> */}
+                    {/* <th scope="col" className="px-4 py-3 font-semibold">
+                      Humidity
+                    </th>
+                    <th scope="col" className="px-4 py-3 font-semibold">
+                      Wind
+                    </th>
+                    <th scope="col" className="px-4 py-3 font-semibold">
+                      Rainfall
+                    </th> */}
+                  </>
+                )}
+              </tr>
+            </thead>
+            <tbody>
+              {weeklyData.map((day, index) => (
+                <tr
+                  key={day.date}
+                  className="border-b border-gray-100 last:border-0"
+                >
+                  <th
+                    scope="row"
+                    className="px-4 py-4 font-semibold text-gray-800"
+                  >
+                    {formatForecastDate(day.date, index)}
+                  </th>
+                  <td className="px-4 py-4 font-semibold text-orange-600">
+                    {displayValue(day.temp)} °C
+                  </td>
+                  {dateRange === "5days" && (
+                    <>
+                      {/* <td className="px-4 py-4 text-gray-700">
+                        {displayValue(day.tempMin)} °C
+                      </td>
+                      <td className="px-4 py-4 text-gray-700">
+                        {displayValue(day.tempMax)} °C
+                      </td> */}
+                      {/* <td className="px-4 py-4 text-gray-700">
+                        {displayValue(day.humidity)}%
+                      </td>
+                      <td className="px-4 py-4 text-gray-700">
+                        {displayValue(day.wind)} km/h
+                      </td>
+                      <td className="px-4 py-4 text-gray-700">
+                        {displayValue(day.rainfall)} mm
+                      </td> */}
+                    </>
+                  )}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </section>
 
       {/* Summary */}
       <div className="bg-blue-500 to-indigo-600 rounded-xl p-6 shadow-lg text-white">
